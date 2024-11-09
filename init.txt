@@ -1,0 +1,7 @@
+npx @react-native-community/cli@latest init AwesomeProject
+npm start
+
+npm install --legacy-peer-deps
+npx react-native run-android
+cd android
+./gradlew clean
