@@ -1,7 +1,256 @@
-npx @react-native-community/cli@latest init AwesomeProject
+,,...........
 npm start
 
 npm install --legacy-peer-deps
 npx react-native run-android
 cd android
 ./gradlew clean
+npx @react-native-community/cli@latest init AwesomeProject
+
+npm install react@18.2.0 react-native@0.73.6 react-native-screens@^3.20.0 react-native-safe-area-context@^4.5.0 react-native-gesture-handler@^2.9.0 @react-navigation/bottom-tabs@^6.5.20 @react-navigation/native@^6.1.17 @react-navigation/stack@^6.3.29
+
+
+npm install @react-navigation/native @react-navigation/native-stack --legacy-peer-deps
+
+npm install @react-native-masked-view/masked-view
+
+npm install @react-native-masked-view/masked-view --legacy-peer-deps
+
+npx @react-native-community/cli@10.1.0 init AwesomeProject --version 0.73.6
+
+
+cd android
+./gradlew clean
+cd ..
+npx react-native run-android
+
+npm install
+
+
+Remove-Item -Recurse -Force .\node_modules
+Remove-Item -Force .\package-lock.json
+
+del package-lock.json
+ Remove-Item -Recurse -Force node_modules
+
+
+
+import React, { useState } from 'react';
+import { View, Button, StyleSheet } from 'react-native';
+import Svg, { Rect, Text, Circle, Path } from 'react-native-svg';
+
+const BuildingFloorPlan = () => {
+  const [doorLights, setDoorLights] = useState({
+    north: false,
+    south: false,
+    east: false,
+    west: false,
+  });
+
+  // Hàm điều khiển đèn bật/tắt cho từng cửa
+  const toggleLight = (door) => {
+    setDoorLights((prevLights) => ({
+      ...prevLights,
+      [door]: !prevLights[door],
+    }));
+  };
+
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Svg height="300" width="300">
+        {/* Mặt nền của tòa nhà */}
+        <Rect x="20" y="20" width="260" height="260" stroke="black" strokeWidth="4" fill="#f0f0f0" />
+
+        {/* Cửa và đèn cho mỗi hướng */}
+        
+        {/* Cửa Bắc */}
+        <Rect x="130" y="10" width="40" height="20" fill="#333" />
+        <Text x="140" y="5" fontSize="14" fill="black">Cửa Bắc</Text>
+        <Circle cx="150" cy="35" r="8" fill={doorLights.north ? "green" : "red"} />
+
+        {/* Mũi tên chỉ hướng Bắc, cách xa đèn */}
+        <Path
+          d="M 150 80 Q 140 70, 150 60 Q 160 70, 150 80 Z"
+          fill={doorLights.north ? "green" : "grey"}
+        />
+
+        {/* Cửa Nam */}
+        <Rect x="130" y="270" width="40" height="20" fill="#333" />
+        <Text x="140" y="310" fontSize="14" fill="black">Cửa Nam</Text>
+        <Circle cx="150" cy="265" r="8" fill={doorLights.south ? "green" : "red"} />
+
+        {/* Mũi tên chỉ hướng Nam, cách xa đèn */}
+        <Path
+          d="M 150 220 Q 140 230, 150 240 Q 160 230, 150 220 Z"
+          fill={doorLights.south ? "green" : "grey"}
+        />
+
+        {/* Cửa Đông */}
+        <Rect x="270" y="130" width="20" height="40" fill="#333" />
+        <Text x="240" y="120" fontSize="14" fill="black">Cửa Đông</Text>
+        <Circle cx="265" cy="150" r="8" fill={doorLights.east ? "green" : "red"} />
+
+        {/* Mũi tên chỉ hướng Đông, cách xa đèn */}
+        <Path
+          d="M 220 150 Q 230 140, 240 150 Q 230 160, 220 150 Z"
+          fill={doorLights.east ? "green" : "grey"}
+        />
+
+        {/* Cửa Tây */}
+        <Rect x="10" y="130" width="20" height="40" fill="#333" />
+        <Text x="25" y="120" fontSize="14" fill="black">Cửa Tây</Text>
+        <Circle cx="35" cy="150" r="8" fill={doorLights.west ? "green" : "red"} />
+
+        {/* Mũi tên chỉ hướng Tây, cách xa đèn */}
+        <Path
+          d="M 80 150 Q 70 140, 60 150 Q 70 160, 80 150 Z"
+          fill={doorLights.west ? "green" : "grey"}
+        />
+      </Svg>
+
+      {/* Nút điều khiển đèn ở 4 góc dưới màn hình */}
+      <View style={styles.buttonContainer}>
+        <Button title="Bật/Tắt Cửa Bắc" onPress={() => toggleLight('north')} />
+        <Button title="Bật/Tắt Cửa Nam" onPress={() => toggleLight('south')} />
+        <Button title="Bật/Tắt Cửa Đông" onPress={() => toggleLight('east')} />
+        <Button title="Bật/Tắt Cửa Tây" onPress={() => toggleLight('west')} />
+      </View>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  buttonContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    marginTop: 20,
+    width: '80%',
+  },
+});
+
+export default BuildingFloorPlan;
+
+
+
+import React, { useEffect, useState } from 'react';
+import { View, ScrollView, StyleSheet, Text, Dimensions } from 'react-native';
+import { LineChart, ProgressChart } from 'react-native-chart-kit';
+
+const screenWidth = Dimensions.get('window').width;
+
+export default function DashboardScreen() {
+  const [lineData, setLineData] = useState([50, 20, 2, 86, 71, 100, 29]);
+  const [progressData, setProgressData] = useState([0.75, 0.82, 0.65]);
+
+  // Tự động cập nhật dữ liệu để tạo hiệu ứng chuyển động
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setLineData(Array.from({ length: 7 }, () => Math.floor(Math.random() * 100)));
+      setProgressData([Math.random(), Math.random(), Math.random()]);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const chartConfig = {
+    backgroundGradientFrom: '#1E2923',
+    backgroundGradientTo: '#08130D',
+    color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+    labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+  };
+
+  return (
+    <ScrollView contentContainerStyle={styles.container}>
+      {/* Area Chart (vùng) */}
+      <LineChart
+        data={{
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+          datasets: [{ data: lineData }],
+        }}
+        width={screenWidth - 40}
+        height={220}
+        yAxisSuffix="°C"
+        withDots={false}
+        chartConfig={{
+          ...chartConfig,
+          backgroundGradientFrom: '#2a5298',
+          backgroundGradientTo: '#1e3c72',
+          color: (opacity = 1) => `rgba(143, 197, 255, ${opacity})`,
+          fillShadowGradient: 'rgba(143, 197, 255, 0.5)',
+          fillShadowGradientOpacity: 1,
+        }}
+        bezier
+        style={styles.chart}
+      />
+
+      {/* Line Chart with Points and Labels */}
+      <LineChart
+        data={{
+          labels: ['01', '02', '03', '04', '05', '06', '07'],
+          datasets: [{ data: lineData }],
+        }}
+        width={screenWidth - 40}
+        height={220}
+        yAxisSuffix=""
+        withDots={true}
+        withShadow={false}
+        withInnerLines={false}
+        chartConfig={{
+          ...chartConfig,
+          color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+        }}
+        style={styles.chart}
+      />
+
+      {/* Circular Progress Charts */}
+      <View style={styles.progressContainer}>
+        {progressData.map((progress, index) => (
+          <View key={index} style={styles.progressWrapper}>
+            <ProgressChart
+              data={{ labels: [], data: [progress] }}
+              width={100}
+              height={100}
+              strokeWidth={12}
+              radius={32}
+              chartConfig={{
+                backgroundGradientFrom: '#08130D',
+                backgroundGradientTo: '#08130D',
+                color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`,
+              }}
+              hideLegend={true}
+            />
+            <Text style={styles.progressText}>{Math.round(progress * 100)}%</Text>
+          </View>
+        ))}
+      </View>
+    </ScrollView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    paddingVertical: 20,
+  },
+  chart: {
+    marginVertical: 10,
+    borderRadius: 16,
+  },
+  progressContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginTop: 20,
+  },
+  progressWrapper: {
+    alignItems: 'center',
+  },
+  progressText: {
+    position: 'absolute',
+    top: 40,
+    fontSize: 18,
+    color: 'white',
+    fontWeight: 'bold',
+  },
+});
+
+
