@@ -1,13 +1,19 @@
 import { useNavigation } from "@react-navigation/native";
-import { Text, TextInput, View, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, TextInput, View, StyleSheet, TouchableOpacity, ImageBackground } from "react-native";
+import React from "react";
 
 export const RegisterPage = () => {
     const navigation = useNavigation();
 
     return (
-        <View style={styles.container}>
+        <ImageBackground
+            source={require('../../../assets/bg2.jpg')}  // Đường dẫn tới ảnh nền
+            style={styles.background}
+            resizeMode="cover"
+        >
+            <View style={styles.overlay} />
             <View style={styles.card}>
-                <Text style={styles.title}>Register</Text>
+                <Text style={styles.title}>Đăng ký tài khoản</Text>
 
                 <TextInput 
                     style={styles.input} 
@@ -36,67 +42,73 @@ export const RegisterPage = () => {
                 />
 
                 <TouchableOpacity style={styles.registerButton} onPress={() => console.log("Registering")}>
-                    <Text style={styles.buttonText}>Register</Text>
+                    <Text style={styles.buttonText}>Đăng ký</Text>
                 </TouchableOpacity>
 
                 <Text style={styles.loginText}>
-                    Already have an account? 
+                    Bạn có tài khoản rồi?  
                     <Text 
                         style={styles.linkText} 
                         onPress={() => navigation.navigate('login')}>
-                        Login
+                        Đăng nhập
                     </Text>
                 </Text>
             </View>
-        </View>
+        </ImageBackground>
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
+    background: {
         flex: 1,
-        backgroundColor: '#f3ebe3',
-        alignItems: 'center',
         justifyContent: 'center',
-        paddingHorizontal: 20,
+        alignItems: 'center',
+    },
+    overlay: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',  // Lớp phủ mờ giúp làm nổi bật thẻ đăng ký
     },
     card: {
-        width: '100%',
+        width: '90%',
         padding: 20,
-        backgroundColor: '#fff',
+        backgroundColor: 'rgba(255, 255, 255, 0.9)',  // Màu trắng mờ giúp nhìn rõ hơn
         borderRadius: 20,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.1,
         shadowRadius: 10,
         elevation: 5,
+        alignItems: 'center',
     },
     title: {
         fontSize: 24,
         fontWeight: '600',
-        color: '#6c4f3d',
+        color: '#FFFFFF',  // Màu trắng cho tiêu đề
         marginBottom: 20,
         textAlign: 'center',
     },
     input: {
         width: '100%',
         height: 50,
-        backgroundColor: '#f9f5f1',
-        borderRadius: 15,
+        backgroundColor: 'rgba(255, 255, 255, 0.8)', // Màu nền sáng nhẹ với độ trong suốt
+        borderRadius: 20,
         paddingHorizontal: 15,
         marginBottom: 15,
         fontSize: 16,
-        color: '#6c4f3d',
+        color: '#333',
+        borderWidth: 1,
+        borderColor: '#ccc',
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.05,
-        shadowRadius: 2,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        elevation: 3,
     },
     registerButton: {
         width: '100%',
         height: 50,
-        backgroundColor: '#d4a373',
-        borderRadius: 15,
+        backgroundColor: '#2D9CDB',
+        borderRadius: 20,
         alignItems: 'center',
         justifyContent: 'center',
         marginVertical: 20,
@@ -108,11 +120,11 @@ const styles = StyleSheet.create({
     },
     loginText: {
         fontSize: 16,
-        color: '#6c4f3d',
+        color: '#FFFFFF',  // Màu trắng cho văn bản thông báo
         textAlign: 'center',
     },
     linkText: {
-        color: '#d4a373',
+        color: '#2D9CDB',
         fontWeight: '600',
         marginLeft: 5,
     },

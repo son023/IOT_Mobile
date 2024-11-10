@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { Text, TextInput, View, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, TextInput, View, StyleSheet, TouchableOpacity, ImageBackground } from "react-native";
 import React, { useState } from "react";
 
 export const LoginPage = () => {
@@ -17,9 +17,14 @@ export const LoginPage = () => {
     };
 
     return (
-        <View style={styles.container}>
+        <ImageBackground
+            source={require('../../../assets/bg2.jpg')}
+            style={styles.background}
+            resizeMode="cover"
+        >
+            <View style={styles.overlay} />
             <View style={styles.card}>
-                <Text style={styles.title}>Welcome Back!</Text>
+                <Text style={styles.title}>Chào mừng trở lại!</Text>
                 
                 <TextInput 
                     style={styles.input} 
@@ -38,67 +43,73 @@ export const LoginPage = () => {
                 />
 
                 <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-                    <Text style={styles.buttonText}>Login</Text>
+                    <Text style={styles.buttonText}>Đăng nhập</Text>
                 </TouchableOpacity>
 
                 <Text style={styles.registerText}>
-                    Don’t have an account? 
+                    Bạn chưa có tài khoản? 
                     <Text 
                         style={styles.linkText} 
                         onPress={() => navigation.navigate('register')}>
-                        Register
+                        Đăng ký
                     </Text>
                 </Text>
             </View>
-        </View>
+        </ImageBackground>
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
+    background: {
         flex: 1,
-        backgroundColor: '#f3ebe3',  // Màu nền ấm
-        alignItems: 'center',
         justifyContent: 'center',
-        paddingHorizontal: 20,
+        alignItems: 'center',
+    },
+    overlay: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',  // Lớp phủ để làm mờ hình nền
     },
     card: {
-        width: '100%',
+        width: '90%',
         padding: 20,
-        backgroundColor: '#fff',
+        backgroundColor: 'rgba(255, 255, 255, 0.9)',  // Nền thẻ trong suốt nhẹ
         borderRadius: 20,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.1,
         shadowRadius: 10,
         elevation: 5,
+        alignItems: 'center',
     },
     title: {
         fontSize: 24,
         fontWeight: '600',
-        color: '#6c4f3d',  // Tông màu chữ chính
+        color: '#FFFFFF',  // Màu trắng cho tiêu đề
         marginBottom: 20,
         textAlign: 'center',
     },
     input: {
         width: '100%',
         height: 50,
-        backgroundColor: '#f9f5f1',  // Màu nền cho input
-        borderRadius: 15,
+        backgroundColor: 'rgba(255, 255, 255, 0.8)', // Màu nền sáng nhẹ với độ trong suốt
+        borderRadius: 20,
         paddingHorizontal: 15,
         marginBottom: 15,
         fontSize: 16,
-        color: '#6c4f3d',  // Màu chữ chính cho input
+        color: '#333',
+        borderWidth: 1,
+        borderColor: '#ccc',
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.05,
-        shadowRadius: 2,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        elevation: 3,
     },
     loginButton: {
         width: '100%',
         height: 50,
-        backgroundColor: '#d4a373',  // Màu nút login đồng bộ với Register Page
-        borderRadius: 15,
+        backgroundColor: '#2D9CDB',
+        borderRadius: 20,
         alignItems: 'center',
         justifyContent: 'center',
         marginVertical: 20,
@@ -110,11 +121,11 @@ const styles = StyleSheet.create({
     },
     registerText: {
         fontSize: 16,
-        color: '#6c4f3d',
+        color: '#FFFFFF',
         textAlign: 'center',
     },
     linkText: {
-        color: '#d4a373',  // Màu liên kết đồng bộ với màu nút
+        color: '#2D9CDB',
         fontWeight: '600',
         marginLeft: 5,
     },
